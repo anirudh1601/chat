@@ -1,0 +1,17 @@
+
+        <div>
+            <p>Recent Groups</p>
+            <div class="container container-fluid"></div>
+                {% for room in room_presentation %}
+                    <ul role="presentation">
+                        <div class="container">
+                            <a href="{%url 'room' room=room.room user=request.user passw=abc.password%}"><p id="room-name ">{{room.room}}</p></a>
+                        </div>
+                    </ul>
+                {% endfor %}
+            </div>
+
+        </div>
+
+
+

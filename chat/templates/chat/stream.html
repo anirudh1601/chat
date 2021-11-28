@@ -1,0 +1,63 @@
+{%load static%}
+
+  
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Live Streaming</title>
+    <style type="text/css">
+    span{
+      max-height: 200px;
+      overflow-y: scroll; 
+      display: block
+    }
+    p {
+      content: '\a';
+      white-space: pre-line;
+      display: block;
+    }
+    b.bold_text {
+      font-weight: bold;
+    }
+    *{
+		  font-family: sans-serif;
+		}
+		h1,h4{
+		    text-align: center;
+		}
+		#me{
+		    position: relative;
+		    width: 50%;
+		    margin: 0 auto;
+		    display: block;
+		}
+		#me video{
+		    position: relative !important;
+		}
+		#remote-container{
+		    display: flex;
+		}
+		#remote-container video{
+		    height: auto;
+		    position: relative !important;
+		}
+    </style>
+    <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.6.1.js"></script>
+</head>
+<body>
+    <input type="text" id="channel_name" placeholder="Channel Name">
+
+    <button onclick="startCall('host')" id="host">Host</button>
+    <button onclick="startCall('audience')" id="audience">Audience</button>
+    <input type="text" id="music_file" placeholder="enter the file path">
+    <button onclick="playMusic()">playFile</button>
+    <h4>Local video</h4>
+    <div id="me"></div>
+    <h4>Remote video</h4>
+    <div id="remote-container">
+    </div>
+
+    <script src="{%static 'stream/stream.js'%}"></script>
+</body>
+</html>

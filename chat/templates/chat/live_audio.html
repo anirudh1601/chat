@@ -1,0 +1,85 @@
+{%extends 'caretaker/base.html'%}
+{%load static%}
+{%block content%}
+
+  
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Live Streaming</title>
+        <style type="text/css">
+
+        #remote-container{
+            display: flex;
+                position: relative;
+                width: 600px;
+                height: 400px;
+                border: 2px solid black;
+        }
+        #remote-container video{
+            height: auto;
+            position: relative !important;
+                position: absolute;
+                right: -20px;
+                width: 100px;
+                height: 120px;
+                border: 2px solid black;
+        }
+            
+        </style>
+        <script src="https://cdn.agora.io/sdk/release/AgoraRTCSDK-3.6.1.js"></script>
+    </head>
+    <body>
+        {{ room_name|json_script:"json-roomname" }}
+        {{ username|json_script:"json-username" }}
+        <h1>
+            SneekHub<br>
+        </h1>
+        <label id="label-channel_name"></label>
+        <form method="POST">
+            {%csrf_token%}
+            <input type="hidden" id="channel_name" placeholder="Channel Name" name="channel_name" value="{{room}}">
+            
+        </form>
+        
+        {% for user in user_presentation %}
+            <ul role="presentation">
+                <div class="container">
+                    {%if request.user.username == user.user%}
+                        <p>me</p>
+                    {%else%}
+                        <p id="user">{{user.user}}</p>
+                    {%endif%}     
+                </div>
+            </ul>
+        {% endfor %}
+        <input type="hidden" id="username1" name="username1" value="{{username}}">
+        <button id="host">Host</button>
+        <button onclick="startCall('audience')" id="audience">Audience</button>
+        <button id="mute">Mute </button>
+        <input type="text" id="music_file" placeholder="enter the file path">
+        <button id="play-music">playFile</button>
+        <button id="leave-call">Leave</button>
+        {{ request.user.username|json_script:"user_id" }}
+        <div id="me">
+            <p id="alldata"></p>
+        </div>
+        <h4>Remote video</h4>
+        
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-12 board" id="remote-container"></div>   
+          </div>
+        </div>
+        <script type="text/javascript">
+            const roomName = JSON.parse(document.getElementById('json-roomname').textContent);
+            const userName = JSON.parse(document.getElementById('json-username').textContent);
+            console.log(userName)
+        </script>
+        <script src="{%static 'stream/stream.js'%}"></script>
+    </body>
+    </html>
+{%endblock%}
+
+    
